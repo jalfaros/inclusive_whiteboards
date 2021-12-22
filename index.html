@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Inclusive Whiteboard</title>
+    <link rel="stylesheet" href="app/css/loginForm.css"
+</head>
+
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-container">
+                <h4>Inclusive Whiteboard</h4>
+                <hr class="hr_custom">
+
+                <form action="http://localhost/inclusive_whiteboards/app/php/register.php" method="POST">
+
+                    <table cellpadding="10px" cellspacing="10px"  class="center" style="margin-top: 10px;">
+                        
+
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <label for="id_username">Nombre de usuario:</label>
+                                </td>
+                                <td>
+                                    <input  type="text" 
+                                            id="id_username"
+                                            name="username"
+                                            required
+                                            placeholder="Nombre de usuario..."        
+                                    />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label for="id_password">Contraseña</label>
+                                </td>
+                                <td>
+                                    <input  type="password" 
+                                            id="id_password"
+                                            name="password"
+                                            required
+                                            placeholder="Contraseña..."        
+                                    />
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <div style="text-align: center;">
+                        <button class="btn btn-danger" type="reset">Limpiar datos</button>
+                        <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+                        <br>
+                    </div>
+
+                    <div style="margin-top:10px;font-size: small;">
+                        <a style="color: blue" href="url">
+                            Crear nueva cuenta
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>
