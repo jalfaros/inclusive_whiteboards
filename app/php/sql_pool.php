@@ -1,23 +1,17 @@
 <?php
     // Setear en variables de entorno más adelante
     //Con esto se va manejar el registro de los usuarios
-    $servername = "localhost";
-    $username = "test";
-    $password = "QGR2s5qDlEpQXU8d"; 
-    $database = "inclusive_whiteboards";
-
-
+    $servername = "LAPTOP-GCS1RLS1\SQLEXPRESS";
+    $connection_info = array( "Database" => "inclusive_whiteboards", "UID" => "whiteboard", "PWD" => "admin");
 
     function poolManager(){
         try{
 
             global $servername;
-            global $username;
-            global $password;
-            global $database;
-    
-            $pool = mysqli_connect( $servername, $username, $password, $database);
+            global $connection_info;
 
+            $pool = sqlsrv_connect($servername, $connection_info);
+            
             if( !$pool ){
                 return null;
             }
@@ -29,3 +23,4 @@
 
 
 ?>
+    

@@ -1,7 +1,7 @@
 
 <?php
 
-require __DIR__ . '/mysqlpool.php';
+require __DIR__ . '/sql_pool.php';
 
 function hashPassword( $password ) {
     try{
@@ -12,39 +12,45 @@ function hashPassword( $password ) {
     }
 }
 
-function registerManager() {
-    try { 
+try { 
 
-        $password = hashPassword($_POST['password']);
-        $username = $_POST['username'];
-
-        $db_pool = poolManager();
-
-        if( !$db_pool ){
-            echo "Error en conexión de base de datos";
-            return;
-        }
-
-        $query = "CALL register_user('jalfaros','$password','Jose','','Alfaro Solano')";
-        //$query = "INSERT INTO user_login (username, password) VALUES ('$username','$password')";
-        
-        $response = mysqli_query( $db_pool, $query );
-        
-        while ($row = mysqli_fetch_array($response)){
-            echo $row['success'];
-        }
+    $username = $_POST['username'];
+    $password = hashPassword($_POST['password']);
+    $firstName = $_POST['firstName'];
+    $secondName = (isset( $_POST['secondName'] )) ? $_POST['secondName'] : null;
+    $lastName = $_POST['lastName'];
 
 
-        print_r ($response);
+    $db_pool = poolManager();
 
-        mysqli_close( $db_pool );
-
-    }catch( Exception $e ){
-        echo "Error: " . $e->getMessage();
+    if( !$db_pool ){
+        echo "Error en conexión de base de datos";
+        return;
     }
+
+    $query = "EXEC register_user '$username', '$password','$firstName','$secondName','$lastName'";
+    $sql_response = sqlsrv_query($db_pool, $query);
+
+
+    if ($sql_response === false) {
+
+        die( print_r( sqlsrv_errors(), true));
+
+    }else {  
+        
+        $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC);
+        sqlsrv_close($db_pool);
+        $sucess = $row['success'] ?? 1; 
+        echo $sucess;
+
+        //Falta el return y todo eso, ya se valida
+    }
+
+
+}catch( Exception $e ){
+    sqlsrv_close($db_pool);
+    echo "Error: " . $e->getMessage();
+    return false;
 }
-
-registerManager();
-
 
 ?>
