@@ -20,3 +20,7 @@ create table stickyNotes (
 	statusId int not null,
 	foreign key (statusId) references workflowStatus(statusId)
 )
+
+delete from user_details
+
+delete from user_login

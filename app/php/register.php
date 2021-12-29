@@ -24,8 +24,8 @@ try {
     $db_pool = poolManager();
 
     if( !$db_pool ){
-        echo "Error en conexión de base de datos";
-        return;
+        echo ("[{success: 0}]");
+        die( print_r( sqlsrv.error(), true ) );
     }
 
     $query = "EXEC register_user '$username', '$password','$firstName','$secondName','$lastName'";
@@ -33,24 +33,26 @@ try {
 
 
     if ($sql_response === false) {
-
+        echo ("[{success: 0}]");
         die( print_r( sqlsrv_errors(), true));
 
     }else {  
-        
-        $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC);
-        sqlsrv_close($db_pool);
-        $sucess = $row['success'] ?? 1; 
-        echo $sucess;
 
-        //Falta el return y todo eso, ya se valida
+        $json = array();
+
+        while( $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC) ){
+            $json[] = $row;
+        }
+
+        echo json_encode($json);
+        sqlsrv_close($db_pool); 
+
     }
 
 
 }catch( Exception $e ){
+    echo ("[{'success': '$e.getMessage()' }]");
     sqlsrv_close($db_pool);
-    echo "Error: " . $e->getMessage();
-    return false;
 }
 
 ?>
