@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inclusive Whiteboard - My Workflows</title>
+    <link rel="stylesheet" href="../css/workflow.css">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"> -->
+    <script src="../js/workflowService.js"></script>
+</head>
+
+<body>
+
+    <script>
+        getUserWorkflows();
+    </script>
+
+    <ul>
+        <li><a href="#home">Inicio</a></li>
+        <li><a href="#news">Workflow</a></li>
+        <li style="float:right"><a class="active" href="#about">About</a></li>
+    </ul>
+
+    <div class="flowContainer" id="flowContainer">
+
+        <div class="workCard add" onclick="showForm()">
+            <div class="card_icon">
+                <i class="fa fa-plus-square"></i>
+            </div>
+            <h2 class="card-title">
+                Crear nueva pizarra
+            </h2>
+
+            <form id="workflowForm" style="display: none" onsubmit="createWorkflow(event)" autocomplete="off">
+                <div class="inputContainer">
+                    <label for="idNombre"><span style="font-size:20px;font-weight:bold;">Nombre</span></label>
+                    <input  type="text"
+                            required
+                            name="flowName"                    
+                    >      
+                </div>
+
+                <div class="inputContainer">
+                    <label for="idNombre"><span style="font-size:20px;font-weight:bold;">Descripción</span></label>
+                    <input  type="text"
+                            required
+                            name="flowDescription"
+                    >
+                </div>
+
+                <div class="buttonContainer">
+                    <button type="submit">
+                        <span style="font-weight: bold;font-size:15px;">
+                            Agregar
+                        </span>
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    
+        <div class="workCard created">
+            <h4>Texto</h4>
+            <p>Esto es una descripción de la tarjeta</p>
+        </div>
+        
+    </div>
+
+    
+ 
+
+    
+ 
+</body>
+
+</html>

@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Inclusive Whiteboard</title>
-    <link rel="stylesheet" href="../css/loginForm.css">
     <script type="text/javascript" src="../js/registerService.js"></script>
+    <link rel="stylesheet" href="../css/loginForm.css">
 </head>
 
 
@@ -21,13 +21,14 @@
                 <h4>Inclusive Whiteboard - Registration Form</h4>
                 <hr class="hr_custom">
 
-                
-                <div class="info">
-                    <p>Este usuario ya se encuentra registrado</p>
+                <div id="already_user" class="info">
+                    <span>
+                        ¡Este usuario ya se encuentra registrado!
+                    </span>
                 </div>
-            
 
-                <form id="registrationForm" method="POST"> 
+
+                <form autocomplete="off" id = "registrationForm" onsubmit = "registerEventForm(event)"> 
 
                     <table cellpadding="10px" cellspacing="10px"  class="center" style="margin-top: 10px;">
                         
@@ -112,7 +113,7 @@
 
                     <div style="text-align: center;">
                         <button class="btn btn-danger" type="reset">Limpiar datos</button>
-                        <button class="btn btn-primary" type="submit" onclick="registerEventForm()">Registrarse</button>
+                        <button class="btn btn-primary" type="submit">Registrarse</button>
                         <br>
                     </div>
 

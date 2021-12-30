@@ -1,7 +1,7 @@
 
 <?php
 
-require __DIR__ . '/sql_pool.php';
+require_once __DIR__ . '/sql_pool.php';
 
 function hashPassword( $password ) {
     try{
@@ -39,7 +39,7 @@ try {
     }else {  
 
         $json = array();
-
+        
         while( $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC) ){
             $json[] = $row;
         }
