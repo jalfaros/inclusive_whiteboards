@@ -2,7 +2,7 @@
 
 const BASEURL = 'http://localhost/inclusive_whiteboards/app/php/'
 
-var userWorkflows = [];
+userWorkflows = [];
 
 const showForm = () => {
     document.getElementById("workflowForm").style.display = "";
@@ -26,38 +26,98 @@ const createWorkflow = (e) => {
             document.getElementById("workflowForm").style.display = "none";
             getUserWorkflows();
         }
+    }).catch(err => {
+        console.log(err);
     })
 };
 
-const getUserWorkflows = async () => {
-    //Falta obtener el user ID de los datos de inicio de sesión ----- jalfaros = 68
-    response = await fetch(BASEURL + 'getWorkflows.php?ownerId=' + 68);
-    workflowsData = await response.json();
-    userWorkflows = workflowsData.length != 0 ? workflowsData : [];
-    console.log(userWorkflows);
-    createWorkflowsCards();
+const getUserWorkflows = () => {
+
+    fetch(BASEURL + 'getWorkflows.php?ownerId=' + 68).then(response => {
+        if (response['status'] === 200) {
+            return response.json();
+        } else {
+            return [];
+        }
+    }).then(data => {
+        userWorkflows = data;
+        createWorkflowsCards(userWorkflows);
+    }).catch(err => console.log(err))
 };
 
-const createWorkflowsCards = () => {
+const createWorkflowsCards = (userWorkflows) => {
 
+    cleanCards();
 
+    userWorkflows.forEach(workflow => {
 
-    userWorkflows.forEach( workflow => {
-        
-        card = document.createElement('div');
+        let card = document.createElement('div');
         card.className = 'workCard';
-        card.setAttribute('Id', workflow.flowId);
+        //card.setAttribute('id', workflow.flowId);
 
-        document.getElementById('flowContainer').appendChild( card );
-        
-        cardTitle = document.createElement('h3');
-        cardDescription = document.createElement('p');
+
+        let iconsDiv = document.createElement('div');
+        iconsDiv.className = 'card-icon';
+
+        let eyeIcon = document.createElement('i');
+        eyeIcon.className = 'fa fa-eye';
+
+        let trashIcon = document.createElement('i');
+        trashIcon.className = 'fa fa-trash';
+
+        trashIcon.addEventListener('click', () => {
+            deleteWorkflow(workflow.flowId);
+        });
+
+        iconsDiv.appendChild(trashIcon);
+        iconsDiv.appendChild(eyeIcon);
+
+        let cardTitle = document.createElement('h4');
+        let cardDescription = document.createElement('p');
         cardTitle.innerHTML = workflow.flowName;
         cardDescription.innerHTML = workflow.flowDescription;
-        
+
+        card.appendChild(iconsDiv);
         card.appendChild(cardTitle);
         card.appendChild(cardDescription);
 
+
+        document.getElementById('flowContainer').appendChild(card);
+
+
     });
+
+
+
 }
 
+const cleanCards = () => {
+    let flowContainer = document.getElementById('flowContainer');
+    let workCards = flowContainer.getElementsByClassName('workCard');
+    while (workCards.length > 0) {
+        workCards[0].remove();
+    }
+
+}
+
+
+const deleteWorkflow = (cardId) => {
+
+
+
+    fetch(BASEURL + 'deleteWorkflow.php?cardId=' + cardId)
+        .then(response => {
+            if (response['status'] !== 200) {
+                return;
+            };
+
+            return response.json();
+
+        }).then(myResponse => {
+            if (!myResponse[0]) {
+                return;
+            }
+            getUserWorkflows();
+        })
+        .catch(error => console.log(error))
+}

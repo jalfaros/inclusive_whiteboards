@@ -16,11 +16,6 @@ body {
 }
 
 
-.container{ 
-    justify-content: center;
-    margin: 0 auto;
-    margin-top: 180px;
-}
 
 .card {
     background-color: rgb(255, 255, 255);
@@ -123,6 +118,10 @@ button{
   background-image: linear-gradient(to right, #ddd6f3 0%, #faaca8  25%, #ddd6f3  100%);
 }
 
+i{
+  cursor: pointer;
+}
+
 
 button:hover{
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.10);
@@ -146,33 +145,32 @@ input:focus{
   color: white;
 }
 
-
-.add{
+.addCard{
+  margin:20px;
+  padding: 20px;
+  border-radius: 10px;
   background: radial-gradient(#f588d8, #c0a3e5);
-  height: auto
+  transition: all 0.4s;
+  color: white;
+  height: auto;
 }
 
 
+
+
 .workCard:hover{
-  cursor: pointer;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
   transform: scale(1.01);
 }
 
 
-.card__icon {
-  position: relative;
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.9);
-  grid-row: 2/3;
-  font-size: 40px;
+.card-icon {
+  display: flex;
+  justify-content: space-between;
+  transition: all 0.4s ease;
 }
 
-.card__title {
-  grid-row: 3/4;
-  font-weight: 400;
-  font-size: 40px;
-}
+
 
 
 @media screen and (max-width: 800px){
