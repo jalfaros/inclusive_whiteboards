@@ -5,19 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Inclusive Whiteboard</title>
-    <link rel="stylesheet" href="../css/loginForm.css"/>
+    <script type="text/javascript" src="../js/registerService.js"></script>
+    <link rel="stylesheet" href="../css/loginForm.css">
 </head>
 
 
 <body>
 
+
     <div class="container">
         <div class="card">
+
+    
             <div class="card-container">
                 <h4>Inclusive Whiteboard - Registration Form</h4>
                 <hr class="hr_custom">
 
-                <form action="http://localhost/inclusive_whiteboards/app/php/register.php" method="POST">
+                <div id="already_user" class="info">
+                    <span>
+                        ¡Este usuario ya se encuentra registrado!
+                    </span>
+                </div>
+
+
+                <form autocomplete="off" id = "registrationForm" onsubmit = "registerEventForm(event)"> 
 
                     <table cellpadding="10px" cellspacing="10px"  class="center" style="margin-top: 10px;">
                         
@@ -120,6 +131,5 @@
 
 
 </body>
-
 
 </html>
