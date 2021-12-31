@@ -23,7 +23,7 @@ try {
     
     $obj = sqlsrv_fetch_object($result);
 
-    if ($obj && password_verify($password, ($obj->pass)  ))
+    if ($obj && password_verify($password, ($obj->password)  ))
     {
         $_SESSION["id"]=$obj->id;
         $_SESSION["userName"]=$obj->userName;

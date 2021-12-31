@@ -33,7 +33,7 @@ const createWorkflow = (e) => {
 
 const getUserWorkflows = () => {
 
-    fetch(BASEURL + 'getWorkflows.php?ownerId=' + 68).then(response => {
+    fetch(BASEURL + 'getWorkflows.php?ownerId=' + 72).then(response => {
         if (response['status'] === 200) {
             return response.json();
         } else {

@@ -11,7 +11,7 @@ try{
 
     $flowName = $_POST['flowName'];
     $flowDescription = $_POST['flowDescription'];
-    $flowOwner = 68; //Cambiar
+    $flowOwner = 72; //Cambiar
 
 
     $db_pool = poolManager();
