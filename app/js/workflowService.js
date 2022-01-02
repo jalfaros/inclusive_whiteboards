@@ -53,8 +53,7 @@ const createWorkflowsCards = (userWorkflows) => {
 
         let card = document.createElement('div');
         card.className = 'workCard';
-        //card.setAttribute('id', workflow.flowId);
-
+        
 
         let iconsDiv = document.createElement('div');
         iconsDiv.className = 'card-icon';
@@ -62,19 +61,31 @@ const createWorkflowsCards = (userWorkflows) => {
         let eyeIcon = document.createElement('i');
         eyeIcon.className = 'fa fa-eye';
 
+        eyeIcon.addEventListener('click', () => {
+            redirectToBoard( workflow.flowId );
+        });
+
         let trashIcon = document.createElement('i');
         trashIcon.className = 'fa fa-trash';
 
         trashIcon.addEventListener('click', () => {
-            deleteWorkflow(workflow.flowId);
+            deleteWorkflow( workflow.flowId );
         });
 
         iconsDiv.appendChild(trashIcon);
         iconsDiv.appendChild(eyeIcon);
 
         let cardTitle = document.createElement('h4');
-        let cardDescription = document.createElement('p');
+        //cardTitle.setAttribute('contenteditable', true);
+
         cardTitle.innerHTML = workflow.flowName;
+        cardTitle.addEventListener('input', ( event ) => {
+            onInputChange( event );
+        });
+
+
+        let cardDescription = document.createElement('p');
+        cardDescription.setAttribute('contenteditable', true);
         cardDescription.innerHTML = workflow.flowDescription;
 
         card.appendChild(iconsDiv);
@@ -83,8 +94,6 @@ const createWorkflowsCards = (userWorkflows) => {
 
 
         document.getElementById('flowContainer').appendChild(card);
-
-
     });
 
 
@@ -103,8 +112,6 @@ const cleanCards = () => {
 
 const deleteWorkflow = (cardId) => {
 
-
-
     fetch(BASEURL + 'deleteWorkflow.php?cardId=' + cardId)
         .then(response => {
             if (response['status'] !== 200) {
@@ -120,4 +127,19 @@ const deleteWorkflow = (cardId) => {
             getUserWorkflows();
         })
         .catch(error => console.log(error))
-}
+};
+
+const redirectToBoard = ( cardId ) => {
+    // Se concatena la parte del cardId para hacer el get en la otra vista
+    window.location.href = "http://localhost/app/html/registerForm.html?cardId=" + cardId;
+};
+
+const onInputChange = (e) => {
+
+    if ( e.data ){
+        return;
+    }
+
+    // Se presiona el enter
+    console.log('Enter')
+};
