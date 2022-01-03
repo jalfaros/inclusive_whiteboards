@@ -23,7 +23,9 @@ const createWorkflow = (e) => {
 
     }).then(myResponse => {
         if (myResponse.length === 0) {
-            document.getElementById("workflowForm").style.display = "none";
+            let addForm = document.getElementById("workflowForm");
+            addForm.style.display = "none";
+            addForm.reset();
             getUserWorkflows();
         }
     }).catch(err => {
@@ -33,6 +35,7 @@ const createWorkflow = (e) => {
 
 const getUserWorkflows = () => {
 
+    //Cambiar por el session ID cuando se realice el merge
     fetch(BASEURL + 'getWorkflows.php?ownerId=' + 68).then(response => {
         if (response['status'] === 200) {
             return response.json();
@@ -76,7 +79,7 @@ const createWorkflowsCards = (userWorkflows) => {
         iconsDiv.appendChild(eyeIcon);
 
         let cardTitle = document.createElement('h4');
-        //cardTitle.setAttribute('contenteditable', true);
+        cardTitle.setAttribute('contenteditable', true);
 
         cardTitle.innerHTML = workflow.flowName;
         cardTitle.addEventListener('input', ( event ) => {
@@ -134,12 +137,16 @@ const redirectToBoard = ( cardId ) => {
     window.location.href = "http://localhost/app/html/registerForm.html?cardId=" + cardId;
 };
 
+
+// Falta la parte de editar, input event    
 const onInputChange = (e) => {
 
-    if ( e.data ){
-        return;
-    }
+    console.log( e )
 
-    // Se presiona el enter
-    console.log('Enter')
+    // if ( e.data ){
+    //     return;
+    // }
+    // // Se presiona el enter
+    // console.log('Enter')
 };
+    
