@@ -4,6 +4,19 @@ const BASEURL = 'http://localhost/inclusive_whiteboards/app/php/'
 
 userWorkflows = [];
 
+const xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+        const resp=eval ("("+xhr.responseText+")");
+
+        (!resp[0])? window.location.replace('http://localhost/inclusive_whiteboards/app/html/loginForm.html')
+        : getUserWorkflows();
+    }
+}
+xhr.open('GET', `${BASEURL}control_sesion.php`, true);
+xhr.send(null);
+
+
 const showForm = () => {
     document.getElementById("workflowForm").style.display = "";
 };
@@ -24,6 +37,7 @@ const createWorkflow = (e) => {
     }).then(myResponse => {
         if (myResponse.length === 0) {
             document.getElementById("workflowForm").style.display = "none";
+            alert('Workflow created!');
             getUserWorkflows();
         }
     }).catch(err => {
@@ -33,7 +47,7 @@ const createWorkflow = (e) => {
 
 const getUserWorkflows = () => {
 
-    fetch(BASEURL + 'getWorkflows.php?ownerId=' + 72).then(response => {
+    fetch(BASEURL + 'getWorkflows.php').then(response => {
         if (response['status'] === 200) {
             return response.json();
         } else {
@@ -61,6 +75,10 @@ const createWorkflowsCards = (userWorkflows) => {
 
         let eyeIcon = document.createElement('i');
         eyeIcon.className = 'fa fa-eye';
+
+        eyeIcon.addEventListener('click', () =>{
+            seeStatesWorkflow(workflow.flowId);
+        });
 
         let trashIcon = document.createElement('i');
         trashIcon.className = 'fa fa-trash';
@@ -103,8 +121,6 @@ const cleanCards = () => {
 
 const deleteWorkflow = (cardId) => {
 
-
-
     fetch(BASEURL + 'deleteWorkflow.php?cardId=' + cardId)
         .then(response => {
             if (response['status'] !== 200) {
@@ -120,4 +136,28 @@ const deleteWorkflow = (cardId) => {
             getUserWorkflows();
         })
         .catch(error => console.log(error))
+}
+
+
+const seeStatesWorkflow = (cardId) =>{
+    console.log('test');
+    
+    localStorage.setItem('idStatusWorkflow', cardId);
+    window.location.href = 'http://localhost/inclusive_whiteboards/app/html/home.html';
+    
+}
+
+const logOut = () => {
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            alert("User logOut");
+            console.log(xhr.responseText);
+            window.location.replace('http://localhost/inclusive_whiteboards/app/html/loginForm.html');
+        }
+    }
+    xhr.open('GET', BASEURL+'/logOut.php', true);
+    xhr.send(null);
+    
 }

@@ -5,7 +5,7 @@
             const resp=eval ("("+xhr.responseText+")");
             //console.log(xhr.responseText, 'init');
             if(resp[0]){
-                window.location.replace('http://localhost/inclusive_whiteboards/app/html/home.html');
+                window.location.replace('http://localhost/inclusive_whiteboards/app/html/workflows.html');
             }
         }
     }
@@ -28,7 +28,7 @@ const logIn = (e) =>{
                     alert(resp[1].error)
                 ) : (   
                     console.log(resp[1], 'datos del usuario para el que los ocupe'),
-                    window.location.replace('http://localhost/inclusive_whiteboards/app/html/home.html')
+                    window.location.replace('http://localhost/inclusive_whiteboards/app/html/workflows.html')
                 )
             }
         };

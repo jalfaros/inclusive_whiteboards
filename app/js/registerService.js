@@ -1,4 +1,4 @@
-const BASEURL = 'http://localhost/inclusive_whiteboards/app/php/'
+const BASEURL = 'http://localhost/inclusive_whiteboards/app/'
 
 const registerEventForm = (e) => {
     e.preventDefault();
@@ -9,14 +9,15 @@ const registerEventForm = (e) => {
 
 const onRegisterFetch = (formData) => {
 
-    fetch(BASEURL + 'register.php', {
+    fetch(BASEURL + 'php/register.php', {
         method: 'POST',
         body: formData
 
     }).then(response => response['status'] === 200 && response.json())
         .then(myData => {
             if (myData.length === 0) {
-                location.replace('http://localhost/inclusive_whiteboards/')
+                alert('User created!')
+                location.replace(`${BASEURL}html/loginForm.html`);
             } else {
                 document.getElementById("already_user").style.display = "inline-block";
             }

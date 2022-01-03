@@ -6,22 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home window</title>
     <script src="http://localhost/inclusive_whiteboards/app/js/homeService.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/home.css">
 </head>
 <body>
-    <nav>
-        <div class="heading">
-            <h3>White Board</h3>
-        </div>
-        <ul class="nav-links">
-            <li><a href="./home.html">Home</a></li>
-            <li><a href="./whiteboard.html">WhiteBoard</a></li>
-            <li><a onclick="logOut()">logOut</a></li>
-            <li><a><button onclick="createColumn()">New column</button></a></li>
-        </ul>
-    </nav>
+    <ul>
+        <li><a>Inicio</a></li>
+        <li><a href="http://localhost/inclusive_whiteboards/app/html/workflows.html">Workflow</a></li>
+        <li style="float:right"><a class="active" href="#about">About</a></li>
+        <li style="float:right; margin-right: 10px;"><a  onclick="logOut()">log out</a></li>
+        <li style="float:right" ><a onclick="createColumn()"> <i class="fa fa-plus-square"></i> New column</a></li>
+    </ul>
     <div class="body-text" style="margin: 15px;">
         <table>
+            <br>
             <tr  id="titles_tables" >
                 <!-- <td >To do </td>
                 <td>Homework</td>
