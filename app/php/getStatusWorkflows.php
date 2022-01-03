@@ -17,20 +17,32 @@ try {
         exit;
     }
 
-    $query = "SELECT * FROM workflowStatus where flowId = " . $statusId;
+    $query = "SELECT * from workflowStatus as WS full outer join stickyNotes AS cards on WS.statusId = cards.statusId where ws.flowId =" . $statusId . "for json auto";
+
     $sql_response = sqlsrv_query($db_pool, $query);
 
     if ( !$sql_response ){
         echo json_encode("['Error': 'Error ejecutando el query']");
         exit;
-    }else { 
-        $json_response = array();
+    }else {
+        
+        $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC );
+        print_r( array_values( $row)[0], false );
 
-        while( $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC ) ){
-            $json_response[] = $row;
-        }
+        // while( $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC ) ){
 
-        echo json_encode($json_response);
+            
+        //     $query = "SELECT * from workflowStatus as WS full outer join stickyNotes AS cards on WS.statusId = cards.statusId where ws.flowId =" . $row['statusId'] . "for json auto";
+        //     $response = sqlsrv_query($db_pool, $query);
+            
+        //     while( $column = sqlsrv_fetch_array( $response, SQLSRV_FETCH_ASSOC ) ){
+        //         print_r( $column, false );
+        //     }
+        // }
+        #print_r ($json_response, false);
+
+
+        //echo json_encode($json_response);
         sqlsrv_close($db_pool);
     }
 
