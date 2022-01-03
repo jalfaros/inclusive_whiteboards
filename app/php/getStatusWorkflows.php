@@ -1,10 +1,15 @@
 <?php
-session_start();
+
 require_once __DIR__ . '/sql_pool.php';
 
 try {
 
-    $ownerId = $_SESSION["id"];
+    if (!isset( $_GET["statusId"] )){
+        echo json_encode("['Error': 'Falta el parametro del usuario']");
+        exit;
+    }
+
+    $statusId = $_GET["statusId"];
     $db_pool = poolManager();
 
     if( !$db_pool ){
@@ -12,11 +17,11 @@ try {
         exit;
     }
 
-    $query = "SELECT * FROM workflows where flowOwnerId = " . $ownerId;
+    $query = "SELECT * FROM workflowStatus where flowId = " . $statusId;
     $sql_response = sqlsrv_query($db_pool, $query);
 
     if ( !$sql_response ){
-        echo json_encode("['Error': 'Error $ownerId ejecutando el query']");
+        echo json_encode("['Error': 'Error ejecutando el query']");
         exit;
     }else { 
         $json_response = array();
