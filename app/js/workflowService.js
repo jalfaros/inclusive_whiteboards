@@ -118,7 +118,7 @@ const createWorkflowsCards = (userWorkflows) => {
             .catch(error => console.error('Error:', error))
             .then(response => {
                 if (response[0]) {
-                    alert('Title edited!')
+                    //alert('Title edited!')
                 }
             });
         });
@@ -135,7 +135,7 @@ const createWorkflowsCards = (userWorkflows) => {
             .catch(error => console.error('Error:', error))
             .then(response => {
                 if (response[0]) {
-                    alert('Description edited!')
+                    //alert('Description edited!')
                 }
             });
             
