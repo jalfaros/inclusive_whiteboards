@@ -63,13 +63,11 @@ const createWorkflowsCards = (userWorkflows) => {
 
     cleanCards();
 
-    userWorkflows.forEach(workflow => {
+    userWorkflows.forEach(({flowId, flowName, flowDescription }) => {
 
         let card = document.createElement('div');
         card.className = 'workCard';
-        //card.setAttribute('id', workflow.flowId);
-
-
+        
         let iconsDiv = document.createElement('div');
         iconsDiv.className = 'card-icon';
 
@@ -77,14 +75,14 @@ const createWorkflowsCards = (userWorkflows) => {
         eyeIcon.className = 'fa fa-eye';
 
         eyeIcon.addEventListener('click', () =>{
-            seeStatesWorkflow(workflow.flowId);
+            seeStatesWorkflow(flowId);
         });
 
         let trashIcon = document.createElement('i');
         trashIcon.className = 'fa fa-trash';
 
         trashIcon.addEventListener('click', () => {
-            deleteWorkflow(workflow.flowId);
+            deleteWorkflow(flowId);
         });
 
         iconsDiv.appendChild(trashIcon);
@@ -92,21 +90,69 @@ const createWorkflowsCards = (userWorkflows) => {
 
         let cardTitle = document.createElement('h4');
         let cardDescription = document.createElement('p');
-        cardTitle.innerHTML = workflow.flowName;
-        cardDescription.innerHTML = workflow.flowDescription;
+        cardTitle.setAttribute('id',`title_${flowId}`)
+        cardDescription.setAttribute('id',`description_${flowId}`)
+
+        cardTitle.contentEditable = true;
+        cardDescription.contentEditable = true;
+        cardTitle.innerHTML = flowName;
+        cardDescription.innerHTML = flowDescription;
 
         card.appendChild(iconsDiv);
         card.appendChild(cardTitle);
         card.appendChild(cardDescription);
 
-
         document.getElementById('flowContainer').appendChild(card);
 
+        document.getElementById(`title_${flowId}`).addEventListener('focusout', ({target}) => {
+            const value = document.getElementById(target.id).innerText;
+
+            const data = new FormData();
+
+            data.append('flowId', target.id.substring(6, target.id.length));
+            data.append('flowName', value);
+            fetch(`${BASEURL}editTitleWorkflow.php`, {
+            method: 'POST', 
+            body: data
+            }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => {
+                if (response[0]) {
+                    alert('Title edited!')
+                }
+            });
+        });
+
+        document.getElementById(`description_${flowId}`).addEventListener('focusout', ({target}) => {
+            const value = document.getElementById(target.id).innerText;
+            const data = new FormData();
+            data.append('flowId', target.id.substring(12, target.id.length));
+            data.append('flowDescription', value);
+            fetch(`${BASEURL}editDescriptionWorkflow.php`, {
+            method: 'POST', 
+            body: data
+            }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => {
+                if (response[0]) {
+                    alert('Description edited!')
+                }
+            });
+            
+        });
 
     });
 
+}
 
 
+const editTitleWorkflow = ({id}) => {
+    console.log(document.getElementById(id).value);
+    console.log('Hola mundo', id);
+    
+    const value  = document.getElementById(id).value;
+    console.log(value);
+    
 }
 
 const cleanCards = () => {

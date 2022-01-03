@@ -48,6 +48,8 @@ const createAllColumns = () => {
         labelName.appendChild(createButtons("fa fa-trash"," ", statusId, deleteColumnTable));
         document.getElementById("titles_tables").appendChild(td);
         column.appendChild(labelName);
+
+        // column.innerHTML = "<p>Hola perros</p>"
     })
 }
 
