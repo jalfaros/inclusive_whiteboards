@@ -36,8 +36,10 @@ const createWorkflow = (e) => {
 
     }).then(myResponse => {
         if (myResponse.length === 0) {
-            document.getElementById("workflowForm").style.display = "none";
-            alert('Workflow created!');
+            let workflowForm = document.getElementById("workflowForm")
+            workflowForm.style.display = "none";
+            workflowForm.reset();
+            alert('Workflow created successfully');
             getUserWorkflows();
         }
     }).catch(err => {
@@ -145,8 +147,7 @@ const deleteWorkflow = (cardId) => {
 
 
 const seeStatesWorkflow = (cardId) =>{
-    console.log('test');
-    
+    // Se puede cambiar con el URI Params *** Opcional
     localStorage.setItem('idStatusWorkflow', cardId);
     window.location.href = 'http://localhost/inclusive_whiteboards/app/html/home.html';
     
@@ -157,8 +158,7 @@ const logOut = () => {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            alert("User logOut");
-            console.log(xhr.responseText);
+            alert("User logout");
             window.location.replace('http://localhost/inclusive_whiteboards/app/html/loginForm.html');
         }
     }
