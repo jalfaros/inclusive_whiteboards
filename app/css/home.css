@@ -56,6 +56,14 @@ th {
     max-width: 25px;
 }
 
+.buttonExit{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: red;
+    margin: 5px;
+}
+
 
 
 .bodyTables, th {
