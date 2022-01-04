@@ -93,7 +93,7 @@ const createWorkflowsCards = (userWorkflows) => {
         let cardTitle = document.createElement('h4');
         cardTitle.setAttribute('contenteditable', true);
 
-        cardTitle.innerHTML = workflow.flowName;
+        cardTitle.innerHTML = flowName;
         cardTitle.addEventListener('input', ( event ) => {
             onInputChange( event );
         });

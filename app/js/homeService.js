@@ -76,7 +76,7 @@ const editStatusWorkflows = (idStatus, index) => {
 //Funtion for create Column in table
 const createColumn = () => {
 
-    let position = null;
+    let position = 1;
 
     if (listColumns.length !== 0) {
 
@@ -193,9 +193,6 @@ const createCulumnTableDinamyc = (id, columnCards) => {
         stickyContainer.className = 'stickyContainer';
     });
 
-
-
-
     if ( Object.keys( columnCards[0] ).length !== 0 ) {
 
         columnCards.forEach(card => {
@@ -204,6 +201,16 @@ const createCulumnTableDinamyc = (id, columnCards) => {
             note.setAttribute("id", card.stickyId)
             note.setAttribute('draggable', true)
        
+            let button = createButtons("fa fa-times", " ",`button_${card.stickyId}`, deleteStickyNote)
+            //button.className = "buttonExit"; //No me funca no sé por qué
+            button.style.position = "absolute";
+            button.style.top = "0";
+            button.style.right = "0";
+            button.style.color = "red";
+            button.style.margin = "5px";
+
+            note.appendChild(button);
+
             note.addEventListener('dragstart', (e) => {
                 const sourceInfo = {
                     'id': e.target.id,
@@ -217,7 +224,6 @@ const createCulumnTableDinamyc = (id, columnCards) => {
                 //console.log( e )
             });
 
-
             let stickyDesDiv = document.createElement('div');
             stickyDesDiv.className = "stickyDescription";
 
@@ -225,6 +231,27 @@ const createCulumnTableDinamyc = (id, columnCards) => {
             stickyDesc.className = "desc";
             stickyDesc.innerHTML = card.stickyDescription;
             stickyDesc.setAttribute('contenteditable', true);
+            stickyDesc.setAttribute('id',`p_${card.stickyId}`);
+            stickyDesc.contentEditable = true;
+
+            //Listener to edit stickynote
+            stickyDesc.addEventListener('focusout', ({target}) => {
+                const value = document.getElementById(target.id).innerText;
+                const data = new FormData();
+                data.append('stickyId', target.id.substring(2, target.id.length));
+                data.append('stickyDescription', value);
+                fetch(`${BASEURL}php/editStickyNote.php`, {
+                method: 'POST', 
+                body: data
+                }).then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
+                    if (response[0]) {
+                        //alert('Description edited!')
+                    }
+                });
+                
+            });
 
             stickyDesDiv.appendChild(stickyDesc);
             note.appendChild(stickyDesDiv);
@@ -238,6 +265,27 @@ const createCulumnTableDinamyc = (id, columnCards) => {
     document.getElementById("body_tables").appendChild(column);
 
     return column;
+}
+
+//Function to delete stickynot
+const deleteStickyNote = ({id}) =>{
+    
+    fetch(`${BASEURL}php/deleteStickynote.php?stickyId=${id.substring(7, id.length)}`)
+    .then(response => {
+        if (response['status'] !== 200) {
+            return;
+        };
+
+        return response.json();
+
+    }).then(myResponse => {
+        if (!myResponse[0]) {
+            return;
+        }
+        getStatusWorkflows();
+        alert("Stick note deleted!");
+    })
+    .catch(error => console.log(error))
 }
 
 //Function to create dinamics label to title 
@@ -320,7 +368,7 @@ const deleteColumnTable = ({ id }) => {
             if (!myResponse[0]) {
                 return;
             }
-            alert("Column delted!");
+            alert("Column deleted!");
         })
         .catch(error => console.log(error))
 
@@ -346,7 +394,6 @@ const logOut = () => {
 // Jose Ignacio Alfaro - 02/01/2022 --- Drag and Drop 
 
 const addStickyNote = (columnElement) => {
-
 
     const stickyDescription = prompt("Ingrese la descripción de la nota: ", "");
     if (!stickyDescription) return;
