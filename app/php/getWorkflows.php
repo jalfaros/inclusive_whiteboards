@@ -1,15 +1,10 @@
 <?php
-
+session_start();
 require_once __DIR__ . '/sql_pool.php';
 
 try {
 
-    if (!isset( $_GET["ownerId"] )){
-        echo json_encode("['Error': 'Falta el parametro del usuario']");
-        exit;
-    }
-
-    $ownerId = $_GET["ownerId"];
+    $ownerId = $_SESSION["id"];
     $db_pool = poolManager();
 
     if( !$db_pool ){
@@ -21,7 +16,7 @@ try {
     $sql_response = sqlsrv_query($db_pool, $query);
 
     if ( !$sql_response ){
-        echo json_encode("['Error': 'Error ejecutando el query']");
+        echo json_encode("['Error': 'Error $ownerId ejecutando el query']");
         exit;
     }else { 
         $json_response = array();

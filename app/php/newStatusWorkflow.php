@@ -1,17 +1,17 @@
 <?php
-session_start();
+
+
 require_once __DIR__ . '/sql_pool.php';
 
 try{
 
-    if ( !isset($_POST['flowName']) || !isset($_POST['flowDescription'])){
+    $statusIndex = $_POST['statusIndex'];
+    $statusName = $_POST['statusName'];
+    $flowId = $_POST['flowId']; //Cambiar
+
+    if ( !$statusIndex || !$statusName || !$flowId){
         echo ("[{'Error': 'Parámetros vacíos'}]");
     }
-
-    $flowName = $_POST['flowName'];
-    $flowDescription = $_POST['flowDescription'];
-    $flowOwner = $_SESSION["id"];
-
 
     $db_pool = poolManager();
 
@@ -20,7 +20,7 @@ try{
         exit;
     }
 
-    $query = "EXEC sp_add_workflow '$flowName', '$flowDescription','$flowOwner'";
+    $query = "EXEC sp_new_status_workflow '$statusIndex', '$statusName','$flowId'";
     $sql_response = sqlsrv_query($db_pool, $query);
 
     
@@ -29,17 +29,12 @@ try{
         die( print_r( sqlsrv_errors(), true));
 
     }else {  
-
         $json = array();
-        
-        while( $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC) ){
-            $json[] = $row;
-        }
-
+        array_push($json, true, "{'msg':'Status $statusName created'}");
         echo json_encode($json);
-        sqlsrv_close($db_pool); 
 
     }
+    
 
 }catch( Exception $e ){
     echo "Error en el catch";

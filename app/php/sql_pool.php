@@ -1,8 +1,8 @@
 <?php
     // Setear en variables de entorno más adelante
     //Con esto se va manejar el registro de los usuarios
-    $servername = "LAPTOP-GCS1RLS1\SQLEXPRESS";
-    $connection_info = array( "Database" => "inclusive_whiteboards", "UID" => "whiteboard", "PWD" => "admin");
+    $servername = ".\SQLEXPRESS";
+    $connection_info = array( "Database" => "inclusive_whiteboards", "UID" => "Whiteboard", "PWD" => "admin");
 
     function poolManager(){
         try{
