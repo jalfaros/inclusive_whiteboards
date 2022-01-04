@@ -182,6 +182,7 @@ const createCulumnTableDinamyc = (id, columnCards) => {
         stickyContainer.className = 'stickyContainer';
 
         //Sigue la conexión con la base de datos
+        moveCard( e.target.id, stickyInfo.id );
     
     });
 
@@ -244,12 +245,12 @@ const createCulumnTableDinamyc = (id, columnCards) => {
                 method: 'POST', 
                 body: data
                 }).then(res => res.json())
-                .catch(error => console.error('Error:', error))
                 .then(response => {
                     if (response[0]) {
                         //alert('Description edited!')
                     }
-                });
+                }).catch(error => console.error('Error:', error))
+                
                 
             });
 
@@ -283,7 +284,7 @@ const deleteStickyNote = ({id}) =>{
             return;
         }
         getStatusWorkflows();
-        alert("Stick note deleted!");
+        alert("Nota eliminada correctamente!");
     })
     .catch(error => console.log(error))
 }
@@ -422,4 +423,17 @@ const addStickyNote = (columnElement) => {
 
 
 };  
+
+
+const moveCard =  ( statusColumnId, stickyId ) => {
+    fetch(`${BASEURL}php/moveNote.php?stickyId=${ stickyId }&statusId=${ statusColumnId }`)
+        .then( response =>  {
+            if(response['status'] === 200) return response.json();
+        
+        }).then(({ response, msg }) => {
+            if ( response !== 1 ){
+                getStatusWorkflows();
+            }
+        })
+};
 
