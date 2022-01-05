@@ -94,9 +94,9 @@ const createWorkflowsCards = (userWorkflows) => {
         cardTitle.setAttribute('contenteditable', true);
 
         cardTitle.innerHTML = flowName;
-        cardTitle.addEventListener('input', ( event ) => {
-            onInputChange( event );
-        });
+        // cardTitle.addEventListener('input', ( event ) => {
+        //     onInputChange( event );
+        // });
 
 
         let cardDescription = document.createElement('p');
@@ -142,12 +142,11 @@ const createWorkflowsCards = (userWorkflows) => {
             method: 'POST', 
             body: data
             }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
             .then(response => {
                 if (response[0]) {
                     //alert('Description edited!')
                 }
-            });
+            }).catch(error => console.error('Error:', error))
             
         });
 
