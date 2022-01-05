@@ -197,19 +197,35 @@ const createCulumnTableDinamyc = (id, columnCards) => {
 
         columnCards.forEach(card => {
             let note = document.createElement('div');
-            note.className = "stickyNote"
-            note.setAttribute("id", card.stickyId)
-            note.setAttribute('draggable', true)
-       
-            let button = createButtons("fa fa-times", " ",`button_${card.stickyId}`, deleteStickyNote)
-            //button.className = "buttonExit"; //No me funca no sé por qué
-            button.style.position = "absolute";
-            button.style.top = "0";
-            button.style.right = "0";
-            button.style.color = "red";
-            button.style.margin = "5px";
+            note.className = "stickyNote";
+            note.style.backgroundColor = card.color;
+            note.setAttribute("id", `card_${card.stickyId}`);
+            note.setAttribute('draggable', true);
 
-            note.appendChild(button);
+            const buttonsStick = document.createElement('div');
+            buttonsStick.setAttribute('id', `content_${card.stickyId}`);
+
+            const button = createButtons("fa fa-times", " ",`button_${card.stickyId}`, deleteStickyNote);
+            button.style.color = "red";
+            button.style.width = "10px";
+
+            const color = document.createElement('input');
+            color.type = "color";
+            color.style.width = "30px";
+            color.style.cursor = "pointer";
+
+            color.onchange = ({target})=> changeColorStick(card.stickyId, target); 
+
+            buttonsStick.className = "containerButtons";
+            buttonsStick.appendChild(color);
+            buttonsStick.appendChild(button);
+
+            note.onmouseover = ()=> buttonsStick.style.display = "flex";
+            //note.onmousemove = ()=> buttonsStick.style.display = "none";
+            note.onmouseout = ()=> buttonsStick.style.display = "none";
+
+            note.appendChild(buttonsStick);
+
 
             note.addEventListener('dragstart', (e) => {
                 const sourceInfo = {
@@ -265,6 +281,23 @@ const createCulumnTableDinamyc = (id, columnCards) => {
     document.getElementById("body_tables").appendChild(column);
 
     return column;
+}
+
+//Function to change color to stick
+const changeColorStick = (idStick, {value}) =>{
+
+    const data = new FormData();
+    data.append('stickyId', idStick);
+    data.append('color', value);
+    fetch(`${BASEURL}php/editColorStickyNote.php`, {
+    method: 'POST', 
+    body: data
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+        if (response[0]) getStatusWorkflows();
+    });
+    
 }
 
 //Function to delete stickynot

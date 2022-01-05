@@ -56,14 +56,11 @@ th {
     max-width: 25px;
 }
 
-.buttonExit{
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: red;
+.containerButtons{
     margin: 5px;
+    display: none;
+    justify-content: space-between;
 }
-
 
 
 .bodyTables, th {
@@ -149,12 +146,9 @@ th {
     margin: 10px;
     border-radius:0 0 0 30px/45px;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.50 );
-    background-color: rgb(233, 236, 56);
     cursor: grab;
 
 }
-
-
 
 .stickyNote:hover{
     transform: scale(1.05);
