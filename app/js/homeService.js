@@ -200,7 +200,7 @@ const createCulumnTableDinamyc = (id, columnCards) => {
             let note = document.createElement('div');
             note.className = "stickyNote";
             note.style.backgroundColor = card.color;
-            note.setAttribute("id", `card_${card.stickyId}`);
+            note.setAttribute("id", card.stickyId);
             note.setAttribute('draggable', true);
 
             const buttonsStick = document.createElement('div');
