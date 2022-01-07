@@ -1,4 +1,4 @@
-let listColumns = [{ id: 1, name: 'Todo' }, { id: 2, name: 'HomeWorks' }, { id: 3, name: 'Done' }];
+let listColumns = [];
 
 const BASEURL = 'http://localhost/inclusive_whiteboards/app/'
 const idStatus = localStorage.getItem('idStatusWorkflow');
@@ -8,9 +8,12 @@ xhr.onreadystatechange = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
         const resp = eval("(" + xhr.responseText + ")");
 
+        if (!resp[0] && !localStorage.getItem('idStatusWorkflow')) {
+            window.location.replace(`${BASEURL}html/workflows.html`);
+        }
+
         (!resp[0]) ? window.location.replace(`${BASEURL}html/loginForm.html`)
             : getStatusWorkflows();
-
     }
 }
 xhr.open('GET', `${BASEURL}php/control_sesion.php`, true);
@@ -19,8 +22,9 @@ xhr.send(null);
 //Function to get the statusWorkflows
 const getStatusWorkflows = () => {
 
+    if(document.getElementById('titles_tables')){
     document.getElementById('titles_tables').innerHTML = '';    
-    document.getElementById('body_tables').innerHTML = '';
+    document.getElementById('body_tables').innerHTML = '';}
 
     fetch(`${BASEURL}php/getStatusWorkflows.php?statusId=${idStatus}`).then(response => {
         if (response['status'] === 200) {
@@ -37,14 +41,14 @@ const getStatusWorkflows = () => {
     }).catch(err => console.log(err))
 };
 
+
 //Function for create culumns dinamic
 const createAllColumns = () => {
-
+    
     // El status index funcionará para manejar la posición de las notas y también para setear la posición de los drags
     listColumns.forEach(({ statusId, statusName, cards }) => {
 
-
-        const column = createCulumnTableDinamyc(statusId, cards);
+        const column = createCulumnTableDinamyc(statusId, cards, statusName);
         const mainTitle = createMainTitleDynamic(`${statusName} `, statusId);
         const labelName = createLabelDynamic(`${statusName} `, statusId);
         const td = createTdTableDynamic(mainTitle, "titleColumn", statusId, createButtons("fa fa-edit", " ", statusId, editTitleColumn), createButtons('fa fa-trash', " ", statusId, deleteColumnTable), createButtons("fa fa-plus-circle", " ", statusId, addStickyNote));
@@ -54,8 +58,6 @@ const createAllColumns = () => {
         labelName.appendChild(createButtons("fa fa-plus-circle", " ", statusId, addStickyNote));
         document.getElementById("titles_tables").appendChild(td);
         column.appendChild(labelName);
-
-        // column.innerHTML = "<p>Hola perros</p>"
     })
 }
 
@@ -75,6 +77,11 @@ const editStatusWorkflows = (idStatus, index) => {
 
 //Funtion for create Column in table
 const createColumn = () => {
+
+    if(listColumns.length === 5){
+        alert("No se permite crear más de 5 columnas.");
+        return;
+    }
 
     let position = 1;
 
@@ -157,11 +164,12 @@ const createMainTitleDynamic = (name, id) => {
 }
 
 //function to crete columns from de table
-const createCulumnTableDinamyc = (id, columnCards) => {
+const createCulumnTableDinamyc = (id, columnCards, statusName) => {
 
     const column = document.createElement("th");
     column.className = "bodyTables"
     column.setAttribute("id", `column_${id}`);
+
     //Agregar la parte de los draggables de las notas
     const stickyContainer = document.createElement("div");
     stickyContainer.className = "stickyContainer";
@@ -196,7 +204,7 @@ const createCulumnTableDinamyc = (id, columnCards) => {
 
     if ( Object.keys( columnCards[0] ).length !== 0 ) {
 
-        columnCards.forEach(card => {
+        columnCards.forEach((card,i) => {
             let note = document.createElement('div');
             note.className = "stickyNote";
             note.style.backgroundColor = card.color;
@@ -247,6 +255,7 @@ const createCulumnTableDinamyc = (id, columnCards) => {
             let stickyDesc = document.createElement('p');
             stickyDesc.className = "desc";
             stickyDesc.innerHTML = card.stickyDescription;
+
             stickyDesc.setAttribute('contenteditable', true);
             stickyDesc.setAttribute('id',`p_${card.stickyId}`);
             stickyDesc.contentEditable = true;
@@ -416,6 +425,7 @@ const logOut = () => {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             alert("Se ha cerrado la sesión correctamente");
             console.log(xhr.responseText);
+            localStorage.setItem('lastUrl', window.document.URL);
             window.location.replace('http://localhost/inclusive_whiteboards/app/html/loginForm.html');
         }
     }
@@ -457,7 +467,7 @@ const addStickyNote = (columnElement) => {
 
 };  
 
-
+//Function to move cards
 const moveCard =  ( statusColumnId, stickyId ) => {
     fetch(`${BASEURL}php/moveNote.php?stickyId=${ stickyId }&statusId=${ statusColumnId }`)
         .then( response =>  {
@@ -469,4 +479,6 @@ const moveCard =  ( statusColumnId, stickyId ) => {
             }
         })
 };
+
+
 

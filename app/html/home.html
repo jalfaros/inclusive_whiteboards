@@ -5,11 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inclusive Whiteboard - Cards </title>
-    <script src="http://localhost/inclusive_whiteboards/app/js/homeService.js"></script>
+    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/home.css">
 </head>
 <body>
+    <script src="http://localhost/inclusive_whiteboards/app/js/homeService.js"></script>
+    <script src="http://localhost/inclusive_whiteboards/app/js/speechRecognizer.js"></script>
+
     <ul>
         <li><a>Pizarras inclusivas</a></li>
         <li><a href="http://localhost/inclusive_whiteboards/app/html/workflows.html">Mis pizarras</a></li>
@@ -17,82 +20,14 @@
         <!-- <li style="float:right; margin-right: 10px;"><a  onclick="logOut()">Cerrar sesión</a></li> -->
         <li style="float:right" ><a onclick="createColumn()"> <i class="fa fa-plus-square"></i> Nueva columna</a></li>
     </ul>
-    <div class="body-text" style="margin: 15px;">
-        <table cellspacing="15">
+    <div>
+        <table id="mainTable" cellspacing="15">
             <br>
             <tr  id="titles_tables" >
-                <!-- <td >To do </td>
-                <td>Homework</td>
-                <td>Done</td> -->
+
             </tr>
             <tr id="body_tables">
-                <!-- <th >
-                    <label class="titleInsideColumn" for="">To do</label>
-                    
-                    <div class="stickyContainer" id="1">
-                        
-                        <div class="stickyNote" draggable="true" id="nota1">
-                            <div class="stickyDescription">
-                                <p class="desc" contenteditable="true">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quas ad id eum laboriosamsadfsdfsdfsadfasdf</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </th >
-
-                <script>
-                    const stickyNote = document.getElementById('nota1');
-
-                    stickyNote.addEventListener('dragstart', () => {
-                        console.log('Drag Start ')
-                    });
-
-
-                    stickyNote.addEventListener('dragend', () => {
-                        console.log('Drag END ')
-                    });
-                    
-                    stickyNote.addEventListener('drag', () => {
-                        //console.log('Dragging')
-                    });
-                    
-                </script>
-
-
-                <th style="background-color: #64B6AC">
-                    <label class="titleInsideColumn" for="">Homework</label>
-                    <div class="stickyContainer" id="container2">
-                        <p></p>
-                    </div>
-                </th>
-
-
-                <script>
-                    const container = document.getElementById('container2');
-                    
-                    container.addEventListener('dragenter', (e) => {
-                        console.log('dragEnter')
-                    })
-
-                    container.addEventListener('dragover', (e) => {
-                        e.preventDefault();
-                    })
-                    container.addEventListener('drop', (e) => {
-                        console.log('drop')
-                        container.appendChild( document.getElementById('nota1') );
-
-                    })
-
-                    
-                </script>
-                
-                
-                <th style="background-color: #9D85FF">
-                    <label class="titleInsideColumn" for="">Done</label>
-                    <div class="stickyContainer">
-                        <h4>Hola</h4>
-                    </div>
-                </th> -->
+        
             </tr>
 
         </table>

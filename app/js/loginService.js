@@ -23,13 +23,21 @@ const logIn = (e) =>{
             {
                 const resp=eval ("("+xhttp.responseText+")");
                 
-                resp[0]==false? (
-                    console.log(resp[1].error),
-                    alert(resp[1].error)
-                ) : (   
-                    console.log(resp[1], 'datos del usuario para el que los ocupe'),
-                    window.location.replace('http://localhost/inclusive_whiteboards/app/html/workflows.html')
-                )
+                if(resp[0]==false) {
+                    console.log(resp[1].error);
+                    alert(resp[1].error);
+                } else {
+                    if (localStorage.getItem('user') === resp[1].id) {
+                        (localStorage.getItem('lastUrl'))? window.location.replace(localStorage.getItem('lastUrl'))
+                        : window.location.replace('http://localhost/inclusive_whiteboards/app/html/workflows.html')
+                        
+                    }else{
+                        console.log(resp[1], 'datos del usuario para el que los ocupe');
+                        localStorage.setItem('user', resp[1].id);
+                        window.location.replace('http://localhost/inclusive_whiteboards/app/html/workflows.html');
+                    }
+                    
+                }  
             }
         };
         xhttp.open("POST", "http://localhost/inclusive_whiteboards/app/php/logIn.php", true);

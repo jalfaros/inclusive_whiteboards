@@ -1,4 +1,5 @@
 <?php
+header('Content-type: application/json');
 session_start();
 require_once __DIR__ . '/sql_pool.php';
 
@@ -21,7 +22,8 @@ try {
     }else { 
         $json_response = array();
 
-        while( $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC ) ){
+         while( $row = sqlsrv_fetch_array( $sql_response, SQLSRV_FETCH_ASSOC ) ){
+
             $json_response[] = $row;
         }
 

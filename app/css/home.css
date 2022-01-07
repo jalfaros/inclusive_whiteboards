@@ -1,6 +1,7 @@
 
 html, body {  
-    margin:0px;  
+    margin:0;  
+    padding: 0;
     height:100%;  
     background: rgb(110,145,164);
     background: linear-gradient(90deg, rgba(110,145,164,1) 31%, rgba(146,154,156,1) 78%);
@@ -72,6 +73,7 @@ th {
     background-color: #d9d9d9;
     background-image: linear-gradient(315deg, #d9d9d9 0%, #f6f2f2 74%);  
     color: white;
+    align-content: center;
     
 }
 
@@ -113,6 +115,8 @@ th {
     height:90%;
     display: block;
     text-align:center;   
+    margin: 0px;
+    margin-bottom: 15px;
     }
 
     .titleColumn, td{
@@ -122,6 +126,13 @@ th {
     .stickyContainer {
         display: grid;
         grid-template-columns: repeat(2, 1fr);   
+        margin: 0px;
+    }
+
+    .stickyNote {
+        margin: 0px;
+        width: 50px;
+        height: 50px;
     }
 
 
@@ -132,9 +143,10 @@ th {
     height: 95%;
     width: 95%;
     margin: auto;
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
+    justify-content: center;
 }
 
 

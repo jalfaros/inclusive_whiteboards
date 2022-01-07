@@ -207,6 +207,8 @@ const logOut = () => {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             alert("User logout");
+            localStorage.removeItem('lastUrl');
+            localStorage.removeItem('idStatusWorkflow');
             window.location.replace('http://localhost/inclusive_whiteboards/app/html/loginForm.html');
         }
     }
