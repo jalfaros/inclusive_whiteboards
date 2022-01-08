@@ -1,6 +1,6 @@
 # Pizarras inclusivas - Instituto Tecnológico de Costa Rica - VERANO 2021-2022
 
-## Introducción a la Programación Web
+## Introducción a la Programación Web <strong>IC-5001</strong>  - Electiva II
 
 I proyecto del curso en donde se realiza un clon estilo Trello, el cual permite la gestión de tareas mediante notas estilo sticky.
 
